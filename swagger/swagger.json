@@ -1,0 +1,127 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "BIGIO API",
+    "version": "1.0.0",
+    "description": "API Documentation for BIGIO Take Home Challenge"
+  },
+  "host": "localhost:5000",
+  "basePath": "/api",
+  "schemes": ["http"],
+  "paths": {
+    "/stories": {
+      "get": {
+        "summary": "Get all stories with tags",
+        "responses": {
+          "200": {
+            "description": "List of stories with tags",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "author": {
+                    "type": "string"
+                  },
+                  "synopsis": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "cover_image": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "string",
+                    "description": "Comma-separated list of tags"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Add a new story",
+        "consumes": ["multipart/form-data"],
+        "parameters": [
+          {
+            "name": "title",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "author",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "synopsis",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "category",
+            "in": "formData",
+            "type": "string",
+            "enum": ["Financial", "Technology", "Health"],
+            "required": true
+          },
+          {
+            "name": "cover_image",
+            "in": "formData",
+            "type": "file",
+            "required": false
+          },
+          {
+            "name": "status",
+            "in": "formData",
+            "type": "string",
+            "enum": ["Publish", "Draft"],
+            "required": true
+          },
+          {
+            "name": "tags",
+            "in": "formData",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "name": "chapters",
+            "in": "formData",
+            "type": "string",
+            "description": "Chapters data as JSON string",
+            "required": false
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Story added successfully"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    }
+  }
+}
